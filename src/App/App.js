@@ -9,6 +9,7 @@ import ApiContext from '../ApiContext';
 import config from '../config';
 import './App.css';
 import AddFolder from '../AddFolder/AddFolder';
+import AddNote from '../AddNote/AddNote'
 
 class App extends Component {
     state = {
@@ -38,9 +39,61 @@ class App extends Component {
     }
 
     handleAddFolder = name => {
-        console.log(name)
-       fetch(`${config.API_ENDPOINT}/folders`)
-       this.setState({})
+       const fullName ={name: name}
+       fetch(`${config.API_ENDPOINT}/folders`,{
+           method: 'POST',
+           headers: {
+            'Content-Type': 'application/json'
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+          },
+           body: JSON.stringify(fullName)
+       })
+       .then((foldersRes) => {
+        if(!foldersRes.ok){
+            return foldersRes.json().then(error =>{
+                throw error
+            })
+        }
+            return foldersRes.json()
+       })
+       .then((data)=>{
+           let newFolders=this.state.folders
+           newFolders.push(data)
+           this.setState({folders:newFolders})
+       })
+       .catch(error =>{
+           console.log({error})
+       })
+       
+    }
+
+    handleAddNote = (name, content, folderId) => {
+        console.log(name, content, folderId)
+       const fullPost ={name: name, content:content, folderId:folderId}
+       fetch(`${config.API_ENDPOINT}/notes`,{
+           method: 'POST',
+           headers: {
+            'Content-Type': 'application/json'
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+          },
+           body: JSON.stringify(fullPost)
+       })
+       .then((notesRes) => {
+        if(!notesRes.ok){
+            return notesRes.json().then(error =>{
+                throw error
+            })
+        }
+            return notesRes.json()
+       })
+       .then((data)=>{
+           let newNotes=this.state.notes
+           newNotes.push(data)
+           this.setState({notes:newNotes})
+       })
+       .catch(error =>{
+           console.log({error})
+       })
     }
 
     handleDeleteNote = noteId => {
@@ -80,6 +133,14 @@ class App extends Component {
                 ))}
                 <Route path="/note/:noteId" component={NotePageMain} />
                 <Route path="/add-folder" component={AddFolder} />
+                <Route path="/add-note" render={(routerProps) => {
+                    return (
+                        <AddNote
+                            routerProps={routerProps}
+                            folders={this.state.folders}
+                        />
+                    )
+                }} />
             </>
         );
     }
@@ -89,7 +150,8 @@ class App extends Component {
             notes: this.state.notes,
             folders: this.state.folders,
             deleteNote: this.handleDeleteNote,
-            addFolder: this.handleAddFolder
+            addFolder: this.handleAddFolder,
+            addNote: this.handleAddNote
         };
         return (
             <ApiContext.Provider value={value}>
