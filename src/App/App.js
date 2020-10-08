@@ -8,6 +8,7 @@ import NotePageMain from '../NotePageMain/NotePageMain';
 import ApiContext from '../ApiContext';
 import config from '../config';
 import './App.css';
+import AddFolder from '../AddFolder/AddFolder';
 
 class App extends Component {
     state = {
@@ -34,6 +35,12 @@ class App extends Component {
             .catch(error => {
                 console.error({error});
             });
+    }
+
+    handleAddFolder = name => {
+        console.log(name)
+       // fetch(`${config.API_ENDPOINT}/folders`)
+       // this.setState({})
     }
 
     handleDeleteNote = noteId => {
@@ -72,6 +79,7 @@ class App extends Component {
                     />
                 ))}
                 <Route path="/note/:noteId" component={NotePageMain} />
+                <Route path="/add-folder" component={AddFolder} />
             </>
         );
     }
@@ -80,7 +88,8 @@ class App extends Component {
         const value = {
             notes: this.state.notes,
             folders: this.state.folders,
-            deleteNote: this.handleDeleteNote
+            deleteNote: this.handleDeleteNote,
+            addFolder: this.handleAddFolder
         };
         return (
             <ApiContext.Provider value={value}>
