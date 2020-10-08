@@ -39,8 +39,8 @@ class App extends Component {
 
     handleAddFolder = name => {
         console.log(name)
-       // fetch(`${config.API_ENDPOINT}/folders`)
-       // this.setState({})
+       fetch(`${config.API_ENDPOINT}/folders`)
+       this.setState({})
     }
 
     handleDeleteNote = noteId => {
