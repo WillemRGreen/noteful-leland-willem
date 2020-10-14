@@ -11,6 +11,7 @@ export default class AddFolder extends Component {
         error: false
     }
 
+    
     handleSubmit = (e) =>{
         e.preventDefault();
         if(this.state.name.length > 0){
@@ -49,4 +50,8 @@ export default class AddFolder extends Component {
         </section>
         )
     }
+}
+
+AddFolder.defaultProps ={
+
 }

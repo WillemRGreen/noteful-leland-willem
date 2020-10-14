@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ApiContext from '../ApiContext';
-import './AddNote.css'
+import './AddNote.css';
+import PropTypes from 'prop-types';
 
 
 export default class AddNote extends Component {
@@ -84,4 +85,10 @@ export default class AddNote extends Component {
         </section>
         )
     }
+}
+AddNote.propTypes ={
+    folders: PropTypes.array.isRequired
+}
+AddNote.defaultProps ={
+    folders:[]
 }
