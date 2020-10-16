@@ -16,7 +16,6 @@ export default class AddFolder extends Component {
         e.preventDefault();
         if(this.state.name.length > 0){
         this.context.addFolder(this.state.name);
-        this.props.history.push('/')
         }
         else{
             this.setState({error:true})
@@ -50,8 +49,4 @@ export default class AddFolder extends Component {
         </section>
         )
     }
-}
-
-AddFolder.defaultProps ={
-
 }

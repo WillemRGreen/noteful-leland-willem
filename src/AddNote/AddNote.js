@@ -20,7 +20,6 @@ export default class AddNote extends Component {
         if(this.state.name.length > 0){
             if(this.state.content.length > 0){
                 this.context.addNote(this.state.name, this.state.content, this.state.folderId);
-                this.props.history.push('/')
             } else {
                 this.setState({contentError:true})
             }
