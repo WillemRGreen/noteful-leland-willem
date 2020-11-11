@@ -5,7 +5,8 @@ import Note from '../Note/Note'
 import CircleButton from '../CircleButton/CircleButton'
 import ApiContext from '../ApiContext'
 import { getNotesForFolder } from '../notes-helpers'
-import './NoteListMain.css'
+import './NoteListMain.css';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary.js'
 
 export default class NoteListMain extends React.Component {
   static defaultProps = {
@@ -24,11 +25,13 @@ export default class NoteListMain extends React.Component {
         <ul>
           {notesForFolder.map(note =>
             <li key={note.id}>
-              <Note
-                id={note.id}
-                name={note.name}
-                modified={note.modified}
-              />
+              <ErrorBoundary>
+                <Note
+                  id={note.id}
+                  name={note.name}
+                  modified={note.modified}
+                /> 
+              </ErrorBoundary>
             </li>
           )}
         </ul>

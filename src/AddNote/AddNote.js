@@ -75,7 +75,8 @@ export default class AddNote extends Component {
                 {nameInput}
                 <label htmlFor='note-content'>Content</label>
                 {contentInput}
-                <select onClick={this.handleFolderIdChange} name='folder-list'>
+                <select onChange={this.handleFolderIdChange} name='folder-list'>
+                    <option>No folder</option>
                     {this.props.folders.map(folder =>
                         <option value={folder.id}>{folder.name}</option>)}
                 </select>

@@ -10,8 +10,7 @@ import config from '../config';
 import './App.css';
 import AddFolder from '../AddFolder/AddFolder';
 import AddNote from '../AddNote/AddNote';
-import AddNoteError from '../AddNote/AddNoteError';
-import AddFolderError from '../AddFolder/AddFolderError';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary.js';
 
 class App extends Component {
     state = {
@@ -136,22 +135,20 @@ class App extends Component {
                 <Route path="/note/:noteId" component={NotePageMain} />
                 <Route path="/add-folder" render={(routerProps) => {
                     return(
-                    <AddFolderError>
-                        <AddFolder
-                            routerProps={routerProps}
-                        />
-                    </AddFolderError>
+                    <ErrorBoundary>
+                        <AddFolder routerProps={routerProps} />
+                    </ErrorBoundary>
                     )
                 }} 
                 />
                 <Route path="/add-note" render={(routerProps) => {
                     return (
-                        <AddNoteError>
-                        <AddNote
-                            routerProps={routerProps}
-                            folders={this.state.folders}
-                        />
-                        </AddNoteError>
+                        <ErrorBoundary>
+                            <AddNote
+                                routerProps={routerProps}
+                                folders={this.state.folders}
+                            />
+                        </ErrorBoundary>
                     )
                 }} 
                 />
